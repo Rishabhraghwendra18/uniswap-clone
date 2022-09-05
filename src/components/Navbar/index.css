@@ -1,0 +1,28 @@
+.header-sections{
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+    justify-content: center;
+}
+.header-sections-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    background-color: white;
+    padding: 2px;
+    border-radius: 14px;
+}
+.action-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+}
+.uniswap-logo{
+    width: 2rem;
+    height: auto;
+}
+.active{
+    background-color: rgb(247, 248, 250) !important;
+    color: black !important;
+    font-weight: 600 !important;
+}
