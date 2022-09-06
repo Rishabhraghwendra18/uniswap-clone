@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import {
   AppBar,
   Box,
@@ -10,6 +10,7 @@ import {
 import CustomButton from "../Button";
 import { alpha, styled } from "@mui/material/styles";
 import { ethers } from "ethers";
+import UserContext from "../../context";
 import logo from "../../assets/logo.svg";
 import "./index.css";
 
@@ -27,13 +28,15 @@ const CustomNavbar = styled(AppBar)(({ theme }) => ({
 function Navbar() {
   const [section, setSection] = useState("swap");
   const [signerAddress,setSignerAddress] = useState("");
+  const {setProvider} = useContext(UserContext);
   const logIn = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
     // Prompt user for account connections
     await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
-    setSignerAddress( await signer.getAddress());
     console.log("Account:", await signer.getAddress());
+    setSignerAddress( await signer.getAddress());
+    setProvider(provider);
   };
   return (
     <CustomNavbar position="static">
