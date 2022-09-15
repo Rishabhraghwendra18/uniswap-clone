@@ -9,7 +9,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@uniswap/widgets": "^2.7.0",
+    "@uniswap/widgets": "2.8.1",
     "@walletconnect/ethereum-provider": "^1.8.0",
     "@walletconnect/jsonrpc-http-connection": "^1.0.3",
     "@walletconnect/jsonrpc-provider": "^1.0.5",

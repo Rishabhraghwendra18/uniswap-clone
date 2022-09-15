@@ -1,0 +1,8 @@
+.uniswap{
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+}
+.swap-widget{
+    height: fit-content !important;
+}

@@ -10,7 +10,7 @@ function App() {
     <UserContext.Provider value={{provider,setProvider}}>
       <div className="App">
         <Navbar />
-        {/* <UniSwapWidget/> */}
+        <UniSwapWidget/>
       </div>
     </UserContext.Provider>
   );
