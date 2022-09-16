@@ -2,6 +2,7 @@ import React, { useContext,useRef,useCallback } from "react";
 import { SwapWidget } from "@uniswap/widgets";
 import "@uniswap/widgets/fonts.css";
 import UserContext from "../../context";
+import './index.css';
 
 function UniSwapWidget() {
   const { provider } = useContext(UserContext);
@@ -9,8 +10,13 @@ function UniSwapWidget() {
   const connectors = useRef(null)
   const focusConnectors = useCallback(() => connectors.current?.focus(), [])
   return (
-    <div className="Uniswap">
+    <div className="uniswap">
       <SwapWidget
+      style={{
+        height:'auto'
+      }}
+      className="swap-widget"
+      width={'auto'}
       jsonRpcEndpoint={'https://cloudflare-eth.com'}
         provider={provider}
         tokenList={"https://gateway.ipfs.io/ipns/tokens.uniswap.org"}
