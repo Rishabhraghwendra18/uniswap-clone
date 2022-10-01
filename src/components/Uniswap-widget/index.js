@@ -18,6 +18,7 @@ import "./index.css";
 
 function UniSwapWidget() {
   const [inputToken, setInputToken] = useState("Matic");
+  const [inputTokenValue, setInputTokenValue] = useState("0.0");
   const { provider } = useContext(UserContext);
   const UNI = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
   const connectors = useRef(null);
@@ -62,40 +63,10 @@ function UniSwapWidget() {
           <div className="input-token-div">
             <TextField
               id="outlined-basic"
+              label={inputTokenValue === ""?"0.0":""}
               fullWidth
               required
-              label="0.0"
-              variant="outlined"
-              type="number"
-              InputLabelProps={{ shrink: true }}
-              sx={{
-                border: "0px !important",
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={inputToken}
-                      label="Matic"
-                      InputLabelProps={{ shrink: false }}
-                      onChange={() => console.log("chaning")}
-                    >
-                      <MenuItem value={10}>Matic</MenuItem>
-                      <MenuItem value={20}>WEth</MenuItem>
-                      <MenuItem value={30}>1inch</MenuItem>
-                    </Select>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </div>
-          <div className="output-token-div">
-            <TextField
-              id="outlined-basic"
-              label="0.0"
-              variant="outlined"
+              variant="standard"
               type="number"
               InputLabelProps={{ shrink: false }}
               InputProps={{
@@ -115,6 +86,34 @@ function UniSwapWidget() {
                     </Select>
                   </InputAdornment>
                 ),
+                disableUnderline: true,
+              }}
+            />
+          </div>
+          <div className="output-token-div">
+            <TextField
+              id="outlined-basic"
+              variant="standard"
+              type="number"
+              InputLabelProps={{ shrink: false }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={inputToken}
+                      label="Matic"
+                      InputLabelProps={{ shrink: false }}
+                      onChange={() => console.log("chaning")}
+                    >
+                      <MenuItem value={10}>Matic</MenuItem>
+                      <MenuItem value={20}>WEth</MenuItem>
+                      <MenuItem value={30}>1inch</MenuItem>
+                    </Select>
+                  </InputAdornment>
+                ),
+                disableUnderline: true,
               }}
             />
           </div>
