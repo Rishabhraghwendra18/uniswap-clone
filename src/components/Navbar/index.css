@@ -26,3 +26,14 @@
     color: black !important;
     font-weight: 600 !important;
 }
+.netowrk-div{
+    display: flex;
+    gap: 0.4rem;
+}
+.netowrk-div  span{
+    font-size: 1rem;
+}
+.network-logo{
+    width: 1.4rem;
+    height: auto;
+}

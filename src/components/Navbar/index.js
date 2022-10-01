@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   AppBar,
   Box,
@@ -12,6 +12,7 @@ import { alpha, styled } from "@mui/material/styles";
 import { ethers } from "ethers";
 import UserContext from "../../context";
 import logo from "../../assets/logo.svg";
+import polygonLogo from "../../assets/polygon-logo.svg";
 import "./index.css";
 
 const CustomNavbar = styled(AppBar)(({ theme }) => ({
@@ -27,21 +28,42 @@ const CustomNavbar = styled(AppBar)(({ theme }) => ({
 }));
 function Navbar() {
   const [section, setSection] = useState("swap");
-  const [signerAddress,setSignerAddress] = useState("");
-  const {setProvider} = useContext(UserContext);
+  const [signerAddress, setSignerAddress] = useState("");
+  const [userNetwork, setUserNetwork] = useState();
+  const { setProvider } = useContext(UserContext);
   const logIn = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
     // Prompt user for account connections
     await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
     console.log("Account:", await signer.getAddress());
-    setSignerAddress( await signer.getAddress());
+    if (window.ethereum.networkVersion !== "80001") {
+      console.log("rpc endpoint");
+      window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x13881",
+            rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
+            chainName: "Matic Testnet",
+            nativeCurrency: {
+              name: "MATIC",
+              symbol: "MATIC",
+              decimals: 18,
+            },
+            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+          },
+        ],
+      });
+    }
+    setUserNetwork("80001");
+    setSignerAddress(await signer.getAddress());
     setProvider(provider);
   };
   return (
     <CustomNavbar position="static">
       <Toolbar>
-          <img src={logo} alt="uniswap-logo" className="uniswap-logo"/>
+        <img src={logo} alt="uniswap-logo" className="uniswap-logo" />
         {/* <IconButton
           size="large"
           edge="start"
@@ -86,9 +108,24 @@ function Navbar() {
           </div>
         </div>
         <div className="action-buttons">
-          <CustomButton color="inherit">Ethereum</CustomButton>
+          <CustomButton color="inherit">
+            {userNetwork === "80001" ? (
+              <div className="netowrk-div">
+                <img
+                  src={polygonLogo}
+                  alt={"Polygon Logo"}
+                  className="network-logo"
+                ></img>
+                <span>Polygon</span>
+              </div>
+            ) : (
+              "Network"
+            )}
+          </CustomButton>
           <CustomButton color="inherit" onClick={logIn}>
-            {signerAddress!== "" ?(`${signerAddress.slice(0,5)}...${signerAddress.slice(38,42)}`):"Connect Wallet"}
+            {signerAddress !== ""
+              ? `${signerAddress.slice(0, 5)}...${signerAddress.slice(38, 42)}`
+              : "Connect Wallet"}
           </CustomButton>
         </div>
       </Toolbar>
