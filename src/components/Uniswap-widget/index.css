@@ -14,3 +14,7 @@
     /* display: grid;
     grid-template-columns: repeat(2,0.6fr); */
 }
+.token-logo{
+    width: 1.5rem;
+    height: auto;
+}

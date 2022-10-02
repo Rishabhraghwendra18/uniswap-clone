@@ -91,20 +91,6 @@ function Navbar() {
             >
               Pool
             </CustomButton>
-            <CustomButton
-              color="inherit"
-              onClick={() => setSection("vote")}
-              className={section === "vote" ? "active" : null}
-            >
-              Vote
-            </CustomButton>
-            <CustomButton
-              color="inherit"
-              onClick={() => setSection("charts")}
-              className={section === "charts" ? "active" : null}
-            >
-              Charts
-            </CustomButton>
           </div>
         </div>
         <div className="action-buttons">

@@ -9,11 +9,13 @@ import {
   CardHeader,
   Select,
   MenuItem,
-  InputAdornment
+  InputAdornment,
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import "@uniswap/widgets/fonts.css";
 import UserContext from "../../context";
+import polygonLogo from "../../assets/polygon-matic-token-icon.png";
+import usdcTokenLogo from "../../assets/usdc-token-icon.png";
 import "./index.css";
 
 function UniSwapWidget() {
@@ -49,6 +51,22 @@ function UniSwapWidget() {
       boxShadow: "none",
     },
   }));
+  const CustomSelect = styled(Select)(({ theme }) => ({
+    borderRadius: "16px",
+    height: "fit-content",
+    backgroundColor: "rgb(237, 238, 242)",
+    borderColor:'white',
+    "#demo-simple-select": {
+      display: "flex",
+      alignItems: "center",
+      gap: "0.3rem",
+      fontSize: "18px",
+      fontWeight: 500,
+    },
+    '&:hover':{
+      backgroundColor:'rgb(232, 0, 111)',
+    }
+  }));
   return (
     <div className="uniswap">
       <CustomCard sx={{ minWidth: 275 }}>
@@ -63,7 +81,7 @@ function UniSwapWidget() {
           <div className="input-token-div">
             <TextField
               id="outlined-basic"
-              label={inputTokenValue === ""?"0.0":""}
+              label={inputTokenValue === "" ? "0.0" : ""}
               fullWidth
               required
               variant="standard"
@@ -71,19 +89,40 @@ function UniSwapWidget() {
               InputLabelProps={{ shrink: false }}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">
-                    <Select
+                  <InputAdornment position="end" sx={{ width: "10rem" }}>
+                    <CustomSelect
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={inputToken}
-                      label="Matic"
                       InputLabelProps={{ shrink: false }}
-                      onChange={() => console.log("chaning")}
+                      sx={{
+                        width: "100%",
+                      }}
+                      onChange={(e) => setInputToken(e.target.value)}
                     >
-                      <MenuItem value={10}>Matic</MenuItem>
-                      <MenuItem value={20}>WEth</MenuItem>
-                      <MenuItem value={30}>1inch</MenuItem>
-                    </Select>
+                      <MenuItem
+                        value={"Matic"}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.3rem",
+                        }}
+                      >
+                        <img src={polygonLogo} className="token-logo"></img>
+                        Matic
+                      </MenuItem>
+                      <MenuItem
+                        value={"WETH"}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.3rem",
+                        }}
+                      >
+                        <img src={usdcTokenLogo} className="token-logo"></img>
+                        USDC
+                      </MenuItem>
+                    </CustomSelect>
                   </InputAdornment>
                 ),
                 disableUnderline: true,
@@ -98,19 +137,42 @@ function UniSwapWidget() {
               InputLabelProps={{ shrink: false }}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">
-                    <Select
+                  <InputAdornment position="end" sx={{ width: "10rem" }}>
+                    <CustomSelect
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={inputToken}
-                      label="Matic"
                       InputLabelProps={{ shrink: false }}
+                      sx={{
+                        width: "100%",
+                        backgroundColor:'rgb(232, 0, 111)',
+                        color:'white',
+                      }}
                       onChange={() => console.log("chaning")}
                     >
-                      <MenuItem value={10}>Matic</MenuItem>
-                      <MenuItem value={20}>WEth</MenuItem>
-                      <MenuItem value={30}>1inch</MenuItem>
-                    </Select>
+                      <MenuItem
+                        value={"Matic"}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.3rem",
+                        }}
+                      >
+                        <img src={polygonLogo} className="token-logo"></img>
+                        Matic
+                      </MenuItem>
+                      <MenuItem
+                        value={"WETH"}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.3rem",
+                        }}
+                      >
+                        <img src={usdcTokenLogo} className="token-logo"></img>
+                        USDC
+                      </MenuItem>
+                    </CustomSelect>
                   </InputAdornment>
                 ),
                 disableUnderline: true,
