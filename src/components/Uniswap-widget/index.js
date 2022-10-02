@@ -20,6 +20,7 @@ import "./index.css";
 
 function UniSwapWidget() {
   const [inputToken, setInputToken] = useState("Matic");
+  const [outputToken, setOutputToken] = useState("USDC");
   const [inputTokenValue, setInputTokenValue] = useState("0.0");
   const { provider } = useContext(UserContext);
   const UNI = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
@@ -98,7 +99,10 @@ function UniSwapWidget() {
                       sx={{
                         width: "100%",
                       }}
-                      onChange={(e) => setInputToken(e.target.value)}
+                      onChange={(e) => {
+                        setInputToken(e.target.value);
+                        setOutputToken(e.target.value === "Matic"?"USDC":"Matic")
+                      }}
                     >
                       <MenuItem
                         value={"Matic"}
@@ -112,7 +116,7 @@ function UniSwapWidget() {
                         Matic
                       </MenuItem>
                       <MenuItem
-                        value={"WETH"}
+                        value={"USDC"}
                         sx={{
                           display: "flex",
                           alignItems: "center",
@@ -141,7 +145,7 @@ function UniSwapWidget() {
                     <CustomSelect
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={inputToken}
+                      value={outputToken}
                       InputLabelProps={{ shrink: false }}
                       sx={{
                         width: "100%",
@@ -152,6 +156,7 @@ function UniSwapWidget() {
                     >
                       <MenuItem
                         value={"Matic"}
+                        disabled={inputToken === "Matic"?true:false}
                         sx={{
                           display: "flex",
                           alignItems: "center",
@@ -162,7 +167,8 @@ function UniSwapWidget() {
                         Matic
                       </MenuItem>
                       <MenuItem
-                        value={"WETH"}
+                        value={"USDC"}
+                        disabled={inputToken === "USDC"?true:false}
                         sx={{
                           display: "flex",
                           alignItems: "center",
