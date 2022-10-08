@@ -43,7 +43,34 @@ function App() {
   };
   useEffect(()=>{
     if(signerAddress === ""){
-      logIn()
+      const fetchUserAccount = async () =>{
+        window.ethereum?.request({method:'eth_accounts'}).then(e=>{
+          if(e?.length===1){
+            if (window.ethereum.networkVersion !== "80001") {
+              console.log("rpc endpoint");
+              window.ethereum.request({
+                method: "wallet_addEthereumChain",
+                params: [
+                  {
+                    chainId: "0x13881",
+                    rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
+                    chainName: "Matic Testnet",
+                    nativeCurrency: {
+                      name: "MATIC",
+                      symbol: "MATIC",
+                      decimals: 18,
+                    },
+                    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+                  },
+                ],
+              });
+            }
+            setUserNetwork("80001");
+            setSignerAddress(e[0])
+          }
+        })
+      }
+      fetchUserAccount()
     }
   },[])
   return (
