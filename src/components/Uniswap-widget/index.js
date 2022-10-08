@@ -203,12 +203,11 @@ function UniSwapWidget() {
         </CustomCardContent>
         <CardActions>
           {signerAddress !== "" ? (
-            <CustomButton loadingPosition="start" variant="contained">
+            <CustomButton variant="contained">
               Swap
             </CustomButton>
           ) : (
             <CustomButton
-              loadingPosition="start"
               variant="contained"
               disabled={loginWaiter}
               onClick={logIn}
