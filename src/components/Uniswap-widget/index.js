@@ -11,7 +11,7 @@ import {
   MenuItem,
   InputAdornment,
 } from "@mui/material";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import { alpha, styled } from "@mui/material/styles";
 import "@uniswap/widgets/fonts.css";
 import UserContext from "../../context";
@@ -23,7 +23,8 @@ function UniSwapWidget() {
   const [inputToken, setInputToken] = useState("Matic");
   const [outputToken, setOutputToken] = useState("USDC");
   const [inputTokenValue, setInputTokenValue] = useState("0.0");
-  const { signerAddress, logIn,loginWaiter } = useContext(UserContext);
+  const [fetchPriceWaiter, setFetchPriceWaiter] = useState(false);
+  const { signerAddress, logIn, loginWaiter } = useContext(UserContext);
   const UNI = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
   const connectors = useRef(null);
   const focusConnectors = useCallback(() => connectors.current?.focus(), []);
@@ -69,6 +70,10 @@ function UniSwapWidget() {
       backgroundColor: "rgb(232, 0, 111)",
     },
   }));
+  const onHandleInputTokenValueChange = (e)=>{
+    setInputTokenValue(e.target.value);
+    setFetchPriceWaiter(true);
+  }
   return (
     <div className="uniswap">
       <CustomCard sx={{ minWidth: 275 }}>
@@ -84,6 +89,7 @@ function UniSwapWidget() {
             <TextField
               id="outlined-basic"
               label={inputTokenValue === "" ? "0.0" : ""}
+              onChange={onHandleInputTokenValueChange}
               fullWidth
               required
               variant="standard"
@@ -188,13 +194,16 @@ function UniSwapWidget() {
               }}
             />
           </div>
+          {fetchPriceWaiter ? (
+            <div className="price-div">
+              <CircularProgress sx={{ margin:0 }} size={25} />
+              Fetching Best Price...
+            </div>
+          ) : null}
         </CustomCardContent>
         <CardActions>
           {signerAddress !== "" ? (
-            <CustomButton
-              loadingPosition="start"
-              variant="contained"
-            >
+            <CustomButton loadingPosition="start" variant="contained">
               Swap
             </CustomButton>
           ) : (
@@ -203,9 +212,15 @@ function UniSwapWidget() {
               variant="contained"
               disabled={loginWaiter}
               onClick={logIn}
-              sx={{display:'flex',alignItems:'center',justifyContent:'center'}}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              {loginWaiter?<CircularProgress sx={{marginRight:1}} size={25}/>:null}
+              {loginWaiter ? (
+                <CircularProgress sx={{ marginRight: 1 }} size={25} />
+              ) : null}
               Connect Wallet
             </CustomButton>
           )}

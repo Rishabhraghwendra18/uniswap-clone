@@ -18,3 +18,10 @@
     width: 1.5rem;
     height: auto;
 }
+.price-div{
+    display:flex;
+    align-items: center;
+    gap:1rem;
+    margin-top: 0.3rem;
+    font-size: 20px;
+}
