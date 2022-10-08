@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import CustomButton from "../Button";
 import { alpha, styled } from "@mui/material/styles";
-import { ethers } from "ethers";
 import UserContext from "../../context";
 import logo from "../../assets/logo.svg";
 import polygonLogo from "../../assets/polygon-logo.svg";
@@ -28,38 +27,7 @@ const CustomNavbar = styled(AppBar)(({ theme }) => ({
 }));
 function Navbar() {
   const [section, setSection] = useState("swap");
-  const [signerAddress, setSignerAddress] = useState("");
-  const [userNetwork, setUserNetwork] = useState();
-  const { setProvider } = useContext(UserContext);
-  const logIn = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-    // Prompt user for account connections
-    await provider.send("eth_requestAccounts", []);
-    const signer = provider.getSigner();
-    console.log("Account:", await signer.getAddress());
-    if (window.ethereum.networkVersion !== "80001") {
-      console.log("rpc endpoint");
-      window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [
-          {
-            chainId: "0x13881",
-            rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
-            chainName: "Matic Testnet",
-            nativeCurrency: {
-              name: "MATIC",
-              symbol: "MATIC",
-              decimals: 18,
-            },
-            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-          },
-        ],
-      });
-    }
-    setUserNetwork("80001");
-    setSignerAddress(await signer.getAddress());
-    setProvider(provider);
-  };
+  const { userNetwork,signerAddress,logIn } = useContext(UserContext);
   return (
     <CustomNavbar position="static">
       <Toolbar>

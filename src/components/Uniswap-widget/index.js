@@ -11,6 +11,7 @@ import {
   MenuItem,
   InputAdornment,
 } from "@mui/material";
+import CircularProgress from '@mui/material/CircularProgress';
 import { alpha, styled } from "@mui/material/styles";
 import "@uniswap/widgets/fonts.css";
 import UserContext from "../../context";
@@ -22,7 +23,7 @@ function UniSwapWidget() {
   const [inputToken, setInputToken] = useState("Matic");
   const [outputToken, setOutputToken] = useState("USDC");
   const [inputTokenValue, setInputTokenValue] = useState("0.0");
-  const { provider } = useContext(UserContext);
+  const { signerAddress, logIn,loginWaiter } = useContext(UserContext);
   const UNI = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
   const connectors = useRef(null);
   const focusConnectors = useCallback(() => connectors.current?.focus(), []);
@@ -56,7 +57,7 @@ function UniSwapWidget() {
     borderRadius: "16px",
     height: "fit-content",
     backgroundColor: "rgb(237, 238, 242)",
-    borderColor:'white',
+    borderColor: "white",
     "#demo-simple-select": {
       display: "flex",
       alignItems: "center",
@@ -64,9 +65,9 @@ function UniSwapWidget() {
       fontSize: "18px",
       fontWeight: 500,
     },
-    '&:hover':{
-      backgroundColor:'rgb(232, 0, 111)',
-    }
+    "&:hover": {
+      backgroundColor: "rgb(232, 0, 111)",
+    },
   }));
   return (
     <div className="uniswap">
@@ -101,7 +102,9 @@ function UniSwapWidget() {
                       }}
                       onChange={(e) => {
                         setInputToken(e.target.value);
-                        setOutputToken(e.target.value === "Matic"?"USDC":"Matic")
+                        setOutputToken(
+                          e.target.value === "Matic" ? "USDC" : "Matic"
+                        );
                       }}
                     >
                       <MenuItem
@@ -149,14 +152,14 @@ function UniSwapWidget() {
                       InputLabelProps={{ shrink: false }}
                       sx={{
                         width: "100%",
-                        backgroundColor:'rgb(232, 0, 111)',
-                        color:'white',
+                        backgroundColor: "rgb(232, 0, 111)",
+                        color: "white",
                       }}
                       onChange={() => console.log("chaning")}
                     >
                       <MenuItem
                         value={"Matic"}
-                        disabled={inputToken === "Matic"?true:false}
+                        disabled={inputToken === "Matic" ? true : false}
                         sx={{
                           display: "flex",
                           alignItems: "center",
@@ -168,7 +171,7 @@ function UniSwapWidget() {
                       </MenuItem>
                       <MenuItem
                         value={"USDC"}
-                        disabled={inputToken === "USDC"?true:false}
+                        disabled={inputToken === "USDC" ? true : false}
                         sx={{
                           display: "flex",
                           alignItems: "center",
@@ -187,7 +190,25 @@ function UniSwapWidget() {
           </div>
         </CustomCardContent>
         <CardActions>
-          <CustomButton variant="contained">Connect Wallet</CustomButton>
+          {signerAddress !== "" ? (
+            <CustomButton
+              loadingPosition="start"
+              variant="contained"
+            >
+              Swap
+            </CustomButton>
+          ) : (
+            <CustomButton
+              loadingPosition="start"
+              variant="contained"
+              disabled={loginWaiter}
+              onClick={logIn}
+              sx={{display:'flex',alignItems:'center',justifyContent:'center'}}
+            >
+              {loginWaiter?<CircularProgress sx={{marginRight:1}} size={25}/>:null}
+              Connect Wallet
+            </CustomButton>
+          )}
         </CardActions>
       </CustomCard>
     </div>
