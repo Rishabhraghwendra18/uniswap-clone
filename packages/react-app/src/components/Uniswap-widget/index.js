@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useCallback, useState } from "react";
-import { SwapWidget } from "@uniswap/widgets";
 import {
   Card,
   CardContent,
@@ -13,7 +12,6 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { alpha, styled } from "@mui/material/styles";
-import "@uniswap/widgets/fonts.css";
 import UserContext from "../../context";
 import polygonLogo from "../../assets/polygon-matic-token-icon.png";
 import usdcTokenLogo from "../../assets/usdc-token-icon.png";

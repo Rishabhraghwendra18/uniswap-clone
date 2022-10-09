@@ -1,52 +1,9 @@
 {
-  "name": "uniswap-clone",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@mui/icons-material": "^5.10.6",
-    "@mui/material": "^5.10.3",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@uniswap/widgets": "2.8.1",
-    "@walletconnect/ethereum-provider": "^1.8.0",
-    "@walletconnect/jsonrpc-http-connection": "^1.0.3",
-    "@walletconnect/jsonrpc-provider": "^1.0.5",
-    "ethers": "^5.7.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^8.0.2",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+    "private":"false",
+    "workspaces":[
+        "packages/*"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@uniswap/sdk-core": "^3.0.2",
-    "@uniswap/v3-sdk": "^3.9.0"
-  }
+    "scripts": {
+        "start": "yarn workspace @uniswap-clone/react-app start"
+    }
 }
