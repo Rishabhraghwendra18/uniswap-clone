@@ -4,6 +4,9 @@
         "packages/*"
     ],
     "scripts": {
-        "start": "yarn workspace @uniswap-clone/react-app start"
+        "start": "yarn workspace @uniswap-clone/react-app start",
+        "compile":"yarn workspace @uniswap-clone/contract hardhat compile",
+        "test":"yarn workspace @uniswap-clone/contract hardhat test",
+        "deploy":"yarn workspace @uniswap-clone/contract hardhat run scripts/deploy.js"
     }
 }
