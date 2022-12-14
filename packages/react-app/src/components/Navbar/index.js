@@ -27,11 +27,15 @@ const CustomNavbar = styled(AppBar)(({ theme }) => ({
 }));
 function Navbar() {
   const [section, setSection] = useState("swap");
-  const { userNetwork,signerAddress,logIn } = useContext(UserContext);
+  const { userNetwork, signerAddress, logIn } = useContext(UserContext);
   return (
     <CustomNavbar position="static">
       <Toolbar>
-        <img src={logo} alt="uniswap-logo" className="uniswap-logo" />
+        <img 
+        src={logo} 
+        alt="uniswap-logo" 
+        className="uniswap-logo" 
+        />
         {/* <IconButton
           size="large"
           edge="start"
