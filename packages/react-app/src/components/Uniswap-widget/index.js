@@ -21,6 +21,7 @@ function UniSwapWidget() {
   const [inputToken, setInputToken] = useState("Matic");
   const [outputToken, setOutputToken] = useState("USDC");
   const [inputTokenValue, setInputTokenValue] = useState("0.0");
+  const [outputTokenValue, setOutputTokenValue] = useState(0.0);
   const [fetchPriceWaiter, setFetchPriceWaiter] = useState(false);
   const { signerAddress, logIn, loginWaiter } = useContext(UserContext);
   const UNI = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
@@ -69,8 +70,9 @@ function UniSwapWidget() {
     },
   }));
   const onHandleInputTokenValueChange = (e)=>{
-    setInputTokenValue(e.target.value);
-    setFetchPriceWaiter(true);
+    e.preventDefault();
+    setInputTokenValue(()=>e.target.value);
+    // setFetchPriceWaiter(true);
   }
   return (
     <div className="uniswap">
@@ -86,8 +88,10 @@ function UniSwapWidget() {
           <div className="input-token-div">
             <TextField
               id="outlined-basic"
-              label={inputTokenValue === "" ? "0.0" : ""}
+              placeholder="0.0"
+              // label={inputTokenValue === "" ? "0.0" : ""}
               onChange={onHandleInputTokenValueChange}
+              // value={inputTokenValue}
               fullWidth
               required
               variant="standard"
@@ -142,6 +146,7 @@ function UniSwapWidget() {
           </div>
           <div className="output-token-div">
             <TextField
+              placeholder="0.0"
               id="outlined-basic"
               variant="standard"
               type="number"

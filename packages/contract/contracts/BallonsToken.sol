@@ -5,6 +5,6 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Ballons is ERC20{
     constructor() ERC20("Ballons", "BAL") {
-        _mint(msg.sender, 1000000000 ether);
+        _mint(msg.sender, 10000000 ether);
     }
 }

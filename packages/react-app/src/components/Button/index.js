@@ -8,7 +8,10 @@ const CustomButton = styled(Button)(({ theme }) => ({
     color:'black',
     backgroundColor:'white',
     borderRadius:'3rem',
-    padding:'8px 12px'
+    padding:'8px 12px',
+    '&:hover':{
+        color:'white'
+    }
 }));
 
 export default CustomButton
