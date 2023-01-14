@@ -87,7 +87,7 @@ describe('Uniswap Clone Contract', function(){
     await ucToken.connect(owner2).approve(uniswapClone.address,ethers.utils.parseEther("10"));
     await uniswapClone.connect(owner2).withdraw(ethers.utils.parseEther("10"));
 
-    const ownerAfterDeposit = await ucToken.balanceOf(owner2.address);
-    expect(ownerAfterDeposit).to.lessThan(ownerUCTokenBalance, "User balance not less than previous balance");
+    const ownerAfterWithdraw = await ucToken.balanceOf(owner2.address);
+    expect(ownerAfterWithdraw).to.lessThan(ownerUCTokenBalance, "User balance not less than previous balance");
   });
 })
