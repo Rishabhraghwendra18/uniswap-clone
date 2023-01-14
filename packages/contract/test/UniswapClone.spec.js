@@ -3,16 +3,18 @@ const { ethers} = require("hardhat");
 const {etherToWei, weiToEther} = require('../utils');
 
 describe('Uniswap Clone Contract', function(){
-  let uniswapClone,erc20Token,owner;
+  let uniswapClone,erc20Token,ucToken,owner,owner2;
   before(async()=>{
-    [owner] = await ethers.getSigners();
+    [owner,owner2] = await ethers.getSigners();
     // Deploying ERC20 token
+    const UCToken = await ethers.getContractFactory("UniswapCloneLiquidityProviderToken");
+    ucToken = await UCToken.deploy();
     const BallonsToken = await ethers.getContractFactory("Ballons");
     erc20Token = await BallonsToken.deploy();
   
     // Deploying Uniswap Clone Contract
     const UniswapClone = await ethers.getContractFactory("UniswapClone");
-    uniswapClone = await UniswapClone.deploy(erc20Token.address);
+    uniswapClone = await UniswapClone.deploy(erc20Token.address,ucToken.address);
 
     // funding uniswap contract
     console.log("owner: ",ethers.utils.formatEther(await owner.getBalance()))
@@ -21,6 +23,8 @@ describe('Uniswap Clone Contract', function(){
       value: ethers.utils.parseEther("1000")
     });
     await erc20Token.transfer(uniswapClone.address,ethers.utils.parseEther('1000'));
+    await erc20Token.transfer(owner2.address,ethers.utils.parseEther('10000'));
+    await uniswapClone.init();
   })
   // it("Should able to Deposit",async()=>{
   //   await erc20Token.approve(uniswapClone.address,etherToWei(1));
@@ -63,5 +67,16 @@ describe('Uniswap Clone Contract', function(){
     const ownerAfterMaticBalance = await owner.getBalance();
     expect(ownerAfterBallonsBalane).lessThan(ownerBeforeBallonsBalance);
     expect(ownerAfterMaticBalance).greaterThan(ownerBeforeMaticBalance);
+  });
+
+  it("Should able to deposit token", async ()=>{
+    const ownerUCTokenBalance = await ucToken.balanceOf(owner2.address);
+    expect(ownerUCTokenBalance).to.equal(0,'User balance is not equal to zero');
+
+    await erc20Token.connect(owner2).approve(uniswapClone.address,ethers.utils.parseEther("100"));
+    await uniswapClone.connect(owner2).deposit({value: ethers.utils.parseEther("1")});
+
+    const ownerAfterDeposit = await ucToken.balanceOf(owner2.address);
+    expect(ownerAfterDeposit).to.greaterThan(0, "User balance not greater than 0");
   })
 })
