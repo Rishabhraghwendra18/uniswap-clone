@@ -58,6 +58,7 @@ contract UniswapClone{
         uint256 tokenAmount = (amount*tokenReserve) / totalLiquidity;
         liquidityProviders[msg.sender] = liquidityProviders[msg.sender] - amount;
         totalLiquidity = totalLiquidity - amount;
+        lpToken.burnFrom(msg.sender,amount);
         (bool sent, ) = payable(msg.sender).call{ value: ethWithdrawn }("");
         require(sent, "withdraw(): revert in transferring eth to you!");
         require(token.transfer(msg.sender, tokenAmount));

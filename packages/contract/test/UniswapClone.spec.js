@@ -69,7 +69,7 @@ describe('Uniswap Clone Contract', function(){
     expect(ownerAfterMaticBalance).greaterThan(ownerBeforeMaticBalance);
   });
 
-  it("Should able to deposit token", async ()=>{
+  it("Should able to deposit token and get LP tokens", async ()=>{
     const ownerUCTokenBalance = await ucToken.balanceOf(owner2.address);
     expect(ownerUCTokenBalance).to.equal(0,'User balance is not equal to zero');
 
@@ -78,5 +78,16 @@ describe('Uniswap Clone Contract', function(){
 
     const ownerAfterDeposit = await ucToken.balanceOf(owner2.address);
     expect(ownerAfterDeposit).to.greaterThan(0, "User balance not greater than 0");
-  })
+  });
+
+  it("Should able to withdraw LP tokens", async ()=>{
+    const ownerUCTokenBalance = await ucToken.balanceOf(owner2.address);
+    expect(ownerUCTokenBalance).to.greaterThan(0,'User balance is equal to zero');
+
+    await ucToken.connect(owner2).approve(uniswapClone.address,ethers.utils.parseEther("10"));
+    await uniswapClone.connect(owner2).withdraw(ethers.utils.parseEther("10"));
+
+    const ownerAfterDeposit = await ucToken.balanceOf(owner2.address);
+    expect(ownerAfterDeposit).to.lessThan(ownerUCTokenBalance, "User balance not less than previous balance");
+  });
 })
