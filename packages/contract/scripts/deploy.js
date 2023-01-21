@@ -6,21 +6,41 @@
 // global scope, and execute the script.
 const hre = require("hardhat");
 
+// async function main() {
+//   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
+//   const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
+//   const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+
+//   const lockedAmount = hre.ethers.utils.parseEther("1");
+
+//   const Lock = await hre.ethers.getContractFactory("Lock");
+//   const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+
+//   await lock.deployed();
+
+//   console.log(
+//     `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+//   );
+// }
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const [owner] = await hre.ethers.getSigners();
+ const UCToken = await hre.ethers.getContractFactory("UniswapCloneLiquidityProviderToken");
+ const ucToken = await UCToken.deploy();
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+ const USDCToken = await hre.ethers.getContractFactory("USDC");
+ const usdcToken = await USDCToken.deploy();
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+ const UniswapClone = await hre.ethers.getContractFactory("UniswapClone");
+ const uniswapClone = await UniswapClone.deploy(usdcToken.address,ucToken.address);
 
-  await lock.deployed();
+ const tokenAmount = hre.ethers.utils.parseEther("1000");
+  owner.sendTransaction({
+    to: uniswapClone.address,
+    value: tokenAmount
+  });
 
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+  await usdcToken.transfer(uniswapClone.address,tokenAmount);
+  await uniswapClone.init();
 }
 
 // We recommend this pattern to be able to use async/await everywhere

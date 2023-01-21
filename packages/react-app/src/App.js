@@ -46,7 +46,7 @@ function App() {
       const fetchUserAccount = async () =>{
         window.ethereum?.request({method:'eth_accounts'}).then(e=>{
           if(e?.length===1){
-            if (window.ethereum.networkVersion !== "80001") {
+            if (window.ethereum.networkVersion !== "80001" && process.env.NODE_ENV === 'production') { // this production line can cause bug
               console.log("rpc endpoint");
               window.ethereum.request({
                 method: "wallet_addEthereumChain",
@@ -64,9 +64,9 @@ function App() {
                   },
                 ],
               });
+              setUserNetwork("80001");
             }
-            setUserNetwork("80001");
-            setSignerAddress(e[0])
+            setSignerAddress(e[0]);
           }
         })
       }
