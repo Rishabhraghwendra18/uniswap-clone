@@ -9,7 +9,7 @@ describe('Uniswap Clone Contract', function(){
     // Deploying ERC20 token
     const UCToken = await ethers.getContractFactory("UniswapCloneLiquidityProviderToken");
     ucToken = await UCToken.deploy();
-    const BallonsToken = await ethers.getContractFactory("Ballons");
+    const BallonsToken = await ethers.getContractFactory("USDC");
     erc20Token = await BallonsToken.deploy();
   
     // Deploying Uniswap Clone Contract
@@ -45,7 +45,7 @@ describe('Uniswap Clone Contract', function(){
     const tokenOuput = await uniswapClone.price(xInput,xReserves,yReserves);
     expect(parseFloat(await ethers.utils.formatEther(tokenOuput)).toFixed(3)).equal('0.999');
   })
-  it("should able to swap matic -> ballons", async ()=>{
+  it("should able to swap matic -> USDC", async ()=>{
     const ownerBeforeBallonsBalance = await erc20Token.balanceOf(owner.address);
     const ownerBeforeMaticBalance = await owner.getBalance();
     await uniswapClone.maticToToken({
@@ -56,7 +56,7 @@ describe('Uniswap Clone Contract', function(){
     expect(ownerAfterBallonsBalane).greaterThan(ownerBeforeBallonsBalance);
     expect(ownerAfterMaticBalance).lessThan(ownerBeforeMaticBalance);
   });
-  it("should able to swap ballons -> matic", async ()=>{
+  it("should able to swap USDC -> matic", async ()=>{
     const ownerBeforeBallonsBalance = await erc20Token.balanceOf(owner.address);
     const ownerBeforeMaticBalance = await owner.getBalance();
     await erc20Token.approve(uniswapClone.address,ethers.utils.parseEther('1'));
