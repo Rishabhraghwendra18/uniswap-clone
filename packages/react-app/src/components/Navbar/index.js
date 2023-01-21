@@ -25,8 +25,7 @@ const CustomNavbar = styled(AppBar)(({ theme }) => ({
     gap: "1.1rem",
   },
 }));
-function Navbar() {
-  const [section, setSection] = useState("swap");
+function Navbar({section,setSection}) {
   const { userNetwork, signerAddress, logIn } = useContext(UserContext);
   return (
     <CustomNavbar position="static">

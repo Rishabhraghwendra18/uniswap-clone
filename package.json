@@ -6,7 +6,7 @@
     "scripts": {
         "copy:abi":"cp ./packages/contract/artifacts/contracts/UniswapClone.sol/UniswapClone.json ./packages/react-app/src/abi",
         "start": "yarn workspace @uniswap-clone/react-app start",
-        "compile":"yarn workspace @uniswap-clone/contract hardhat compile",
+        "compile":"yarn workspace @uniswap-clone/contract hardhat compile && yarn copy:abi",
         "test":"yarn workspace @uniswap-clone/contract hardhat test && yarn copy:abi",
         "deploy:local":"yarn workspace @uniswap-clone/contract hardhat run --network localhost scripts/deploy.js && yarn copy:abi",
         "deploy":"yarn workspace @uniswap-clone/contract hardhat run scripts/deploy.js && yarn copy:abi"

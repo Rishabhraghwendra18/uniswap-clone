@@ -17,12 +17,9 @@ import polygonLogo from "../../assets/polygon-matic-token-icon.png";
 import usdcTokenLogo from "../../assets/usdc-token-icon.png";
 import "./index.css";
 
-function UniSwapWidget() {
+function UniSwapWidget({onHandleInputTokenValueChange,inputTokenValue,outputTokenValue,fetchPriceWaiter,buttonText}) {
   const [inputToken, setInputToken] = useState("Matic");
   const [outputToken, setOutputToken] = useState("USDC");
-  const [inputTokenValue, setInputTokenValue] = useState(0.0);
-  const [outputTokenValue, setOutputTokenValue] = useState(0.0);
-  const [fetchPriceWaiter, setFetchPriceWaiter] = useState(false);
   const { signerAddress, logIn, loginWaiter } = useContext(UserContext);
   const UNI = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984";
   const connectors = useRef(null);
@@ -69,11 +66,7 @@ function UniSwapWidget() {
       backgroundColor: "rgb(232, 0, 111)",
     },
   }));
-  const onHandleInputTokenValueChange = (e)=>{
-    e.preventDefault();
-    setInputTokenValue(()=>e.target.value);
-    // setFetchPriceWaiter(true);
-  }
+ 
   return (
     <div className="uniswap">
       <CustomCard sx={{ minWidth: 275 }}>
@@ -208,7 +201,7 @@ function UniSwapWidget() {
         <CardActions>
           {signerAddress !== "" ? (
             <CustomButton variant="contained">
-              Swap
+              {buttonText}
             </CustomButton>
           ) : (
             <CustomButton

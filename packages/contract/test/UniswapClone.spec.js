@@ -25,6 +25,10 @@ describe('Uniswap Clone Contract', function(){
     await erc20Token.transfer(uniswapClone.address,ethers.utils.parseEther('1000'));
     await erc20Token.transfer(owner2.address,ethers.utils.parseEther('10000'));
     await uniswapClone.init();
+
+    console.log("Uniswap address: ",uniswapClone.address);
+    console.log("USDC address: ",erc20Token.address);
+    console.log("LP Token address: ",ucToken.address);
   })
   // it("Should able to Deposit",async()=>{
   //   await erc20Token.approve(uniswapClone.address,etherToWei(1));

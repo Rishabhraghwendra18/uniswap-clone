@@ -31,6 +31,10 @@ contract UniswapClone{
         totalLiquidity +=liquidityMinted;
     }
     receive() external payable{}
+    function getTokenDepositAmount(uint inputToken) public view returns (uint) {
+        uint256 ethReserve = address(this).balance; 
+        return ((inputToken * tokenReserve) / ethReserve) + 1;
+    }
     function deposit() public payable returns (uint256){
         uint256 ethReserve = address(this).balance - msg.value; 
         uint256 tokenBalance = token.balanceOf(address(this));
