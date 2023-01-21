@@ -20,7 +20,7 @@ import "./index.css";
 function UniSwapWidget() {
   const [inputToken, setInputToken] = useState("Matic");
   const [outputToken, setOutputToken] = useState("USDC");
-  const [inputTokenValue, setInputTokenValue] = useState("0.0");
+  const [inputTokenValue, setInputTokenValue] = useState(0.0);
   const [outputTokenValue, setOutputTokenValue] = useState(0.0);
   const [fetchPriceWaiter, setFetchPriceWaiter] = useState(false);
   const { signerAddress, logIn, loginWaiter } = useContext(UserContext);
@@ -90,7 +90,6 @@ function UniSwapWidget() {
               id="outlined-basic"
               placeholder="0.0"
               // label={inputTokenValue === "" ? "0.0" : ""}
-              onChange={onHandleInputTokenValueChange}
               // value={inputTokenValue}
               fullWidth
               required
@@ -140,6 +139,8 @@ function UniSwapWidget() {
                     </CustomSelect>
                   </InputAdornment>
                 ),
+                value:inputTokenValue || '',
+                onChange:onHandleInputTokenValueChange,
                 disableUnderline: true,
               }}
             />
